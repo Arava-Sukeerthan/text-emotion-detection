@@ -1,6 +1,10 @@
 [build]
-  publish = "frontend"
-  command = ""
+  base = "frontend"
+  publish = "."
+  command = "echo 'Static build complete'"
+
+[build.environment]
+  PIP_REQUIREMENTS_FILE = ""
 
 [[redirects]]
   from = "/*"
