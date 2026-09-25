@@ -7,6 +7,14 @@ from emotion_model import predict_emotion
 app = Flask(__name__)
 
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
+
+
 @app.get("/")
 def home():
     return jsonify({
@@ -24,9 +32,12 @@ def health():
     return jsonify({"status": "ok"})
 
 
-@app.post("/predict")
-@app.post("/api/predict")
+@app.route("/predict", methods=["GET", "POST", "OPTIONS"])
+@app.route("/api/predict", methods=["GET", "POST", "OPTIONS"])
 def predict_route():
+    if request.method == "OPTIONS":
+        return "", 200
+
     payload = request.get_json(silent=True) or {}
     text = str(payload.get("text", "") or "").strip()
 
