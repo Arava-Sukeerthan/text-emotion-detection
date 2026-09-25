@@ -1,10 +1,13 @@
 import os
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 
 from emotion_model import predict_emotion
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(os.path.dirname(BASE_DIR), "frontend")
+
+app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path="")
 
 
 @app.after_request
@@ -17,6 +20,8 @@ def add_cors_headers(response):
 
 @app.get("/")
 def home():
+    if os.path.exists(os.path.join(FRONTEND_DIR, "index.html")):
+        return send_from_directory(FRONTEND_DIR, "index.html")
     return jsonify({
         "message": "Emotion API is running",
         "endpoints": [

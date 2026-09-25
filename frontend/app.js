@@ -4,7 +4,7 @@ const resultBox = document.getElementById("result");
 
 const backendUrl =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    ? "http://localhost:5000"
+    ? ""
     : "https://text-emotion-detection-1-umj6.onrender.com";
 
 form.addEventListener("submit", async (event) => {
