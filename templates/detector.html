@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Emotion Detector</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            font-size: 32px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            resize: none;
+            outline: none;
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 35px;
+            border: none;
+            border-radius: 25px;
+            background: #6366f1;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4f46e5;
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.10);
+            border-radius: 18px;
+        }
+
+        .result-box h2 {
+            margin-bottom: 15px;
+        }
+
+        .emoji {
+            font-size: 70px;
+            margin: 15px 0;
+        }
+
+        .result-box h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .confidence-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+        }
+
+        .confidence-box span {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .confidence-box strong {
+            font-size: 30px;
+        }
+
+        .error {
+            margin-top: 20px;
+            color: #ffb4b4;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>😊 Emotion Detection</h1>
+
+    <form method="POST" action="/detector">
+
+        <textarea
+            name="text"
+            placeholder="Enter your sentence here..."
+            required
+        >{{ text }}</textarea>
+
+        <br>
+
+        <button type="submit">
+            Detect Emotion
+        </button>
+
+    </form>
+
+
+    {% if emotion %}
+
+    <div class="result-box">
+
+        <h2>Emotion Detected</h2>
+
+        <div class="emoji">
+            {{ emoji }}
+        </div>
+
+        <h3>
+            {{ emotion|capitalize }}
+        </h3>
+
+        <div class="confidence-box">
+
+            <span>
+                Confidence Level
+            </span>
+
+            <strong>
+                {{ confidence }}%
+            </strong>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+
+

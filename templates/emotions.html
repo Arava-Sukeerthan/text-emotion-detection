@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EmotionAI - Emotions</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #080b18;
+    color: white;
+}
+
+/* NAVBAR */
+
+.navbar {
+    height: 75px;
+    padding: 0 8%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #0d1022;
+
+    border-bottom: 1px solid #252945;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+
+    background: linear-gradient(90deg,#8b5cf6,#06b6d4);
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navbar a {
+    color: #cbd5e1;
+    text-decoration: none;
+    margin-left: 25px;
+}
+
+.navbar a:hover {
+    color: #22d3ee;
+}
+
+/* HEADER */
+
+.header {
+    text-align: center;
+    padding: 80px 20px 50px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #312e81,
+            transparent 55%
+        );
+}
+
+.header h1 {
+    font-size: 55px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #a78bfa,
+            #22d3ee,
+            #f472b6
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    margin-bottom: 20px;
+}
+
+.header p {
+    color: #94a3b8;
+    font-size: 18px;
+}
+
+/* EMOTION GRID */
+
+.container {
+    width: 1100px;
+    max-width: 92%;
+
+    margin: 40px auto 100px;
+}
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.card {
+    padding: 40px 25px;
+
+    text-align: center;
+
+    background: #11152b;
+
+    border: 1px solid #272b45;
+
+    border-radius: 22px;
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.3);
+}
+
+.emoji {
+    font-size: 75px;
+
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 27px;
+
+    margin-bottom: 12px;
+}
+
+.card p {
+    color: #94a3b8;
+
+    line-height: 1.6;
+}
+
+/* COLORS */
+
+.joy {
+    border-top: 4px solid #facc15;
+}
+
+.sadness {
+    border-top: 4px solid #60a5fa;
+}
+
+.anger {
+    border-top: 4px solid #ef4444;
+}
+
+.fear {
+    border-top: 4px solid #a78bfa;
+}
+
+.surprise {
+    border-top: 4px solid #fb923c;
+}
+
+.love {
+    border-top: 4px solid #f472b6;
+}
+
+/* BUTTON */
+
+.button {
+    display: block;
+
+    width: 220px;
+
+    margin: 50px auto 0;
+
+    padding: 15px;
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #06b6d4
+        );
+
+    font-weight: bold;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+
+    padding: 40px;
+
+    color: #64748b;
+
+    border-top: 1px solid #252945;
+}
+
+/* MOBILE */
+
+@media(max-width:750px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 40px;
+    }
+
+    .navbar a {
+        margin-left: 8px;
+        font-size: 12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+        EmotionAI
+    </div>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/emotions">Emotions</a>
+
+        <a href="/detector">Detector</a>
+
+        <a href="/about">About</a>
+
+    </div>
+
+</nav>
+
+
+<section class="header">
+
+    <h1>
+        Explore Emotions
+    </h1>
+
+    <p>
+        Our AI system recognizes six different emotions
+        from written text.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+    <div class="grid">
+
+
+        <div class="card joy">
+
+            <div class="emoji">
+                😊
+            </div>
+
+            <h2>
+                Joy
+            </h2>
+
+            <p>
+                Represents happiness, excitement,
+                pleasure and positive feelings.
+            </p>
+
+        </div>
+
+
+        <div class="card sadness">
+
+            <div class="emoji">
+                😢
+            </div>
+
+            <h2>
+                Sadness
+            </h2>
+
+            <p>
+                Represents sadness, disappointment
+                and unhappy feelings.
+            </p>
+
+        </div>
+
+
+        <div class="card anger">
+
+            <div class="emoji">
+                😡
+            </div>
+
+            <h2>
+                Anger
+            </h2>
+
+            <p>
+                Represents frustration,
+                irritation and anger.
+            </p>
+
+        </div>
+
+
+        <div class="card fear">
+
+            <div class="emoji">
+                😨
+            </div>
+
+            <h2>
+                Fear
+            </h2>
+
+            <p>
+                Represents worry, nervousness
+                and fearful feelings.
+            </p>
+
+        </div>
+
+
+        <div class="card surprise">
+
+            <div class="emoji">
+                😲
+            </div>
+
+            <h2>
+                Surprise
+            </h2>
+
+            <p>
+                Represents unexpected events,
+                astonishment and surprise.
+            </p>
+
+        </div>
+
+
+        <div class="card love">
+
+            <div class="emoji">
+                ❤️
+            </div>
+
+            <h2>
+                Love
+            </h2>
+
+            <p>
+                Represents affection,
+                care and loving feelings.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <a href="/detector" class="button">
+        Try Emotion Detector
+    </a>
+
+</div>
+
+
+<footer>
+
+    EmotionAI — Text Emotion Detection
+
+</footer>
+
+
+</body>
+
+</html>

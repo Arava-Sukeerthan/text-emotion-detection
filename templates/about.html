@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EmotionAI - About</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+
+    background: #080b18;
+
+    color: white;
+}
+
+/* NAVBAR */
+
+.navbar {
+
+    height: 75px;
+
+    padding: 0 8%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #0d1022;
+
+    border-bottom:
+        1px solid #252945;
+}
+
+.logo {
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8b5cf6,
+            #06b6d4
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.navbar a {
+
+    color: #cbd5e1;
+
+    text-decoration: none;
+
+    margin-left: 25px;
+}
+
+.navbar a:hover {
+
+    color: #22d3ee;
+}
+
+/* ABOUT */
+
+.hero {
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #312e81,
+            transparent 50%
+        );
+}
+
+.hero h1 {
+
+    font-size: 55px;
+
+    margin-bottom: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #a78bfa,
+            #22d3ee
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+
+    color: #94a3b8;
+
+    font-size: 18px;
+}
+
+/* CONTENT */
+
+.container {
+
+    width: 950px;
+
+    max-width: 92%;
+
+    margin: 50px auto;
+}
+
+.card {
+
+    margin-bottom: 30px;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+    background: #11152b;
+
+    border:
+        1px solid #272b45;
+}
+
+.card h2 {
+
+    margin-bottom: 15px;
+
+    color: #a78bfa;
+}
+
+.card p {
+
+    color: #94a3b8;
+
+    line-height: 1.8;
+
+    font-size: 16px;
+}
+
+/* TECHNOLOGIES */
+
+.tech-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.tech {
+
+    padding: 20px;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+    background: #171b35;
+
+    border:
+        1px solid #30354f;
+}
+
+/* FOOTER */
+
+footer {
+
+    text-align: center;
+
+    padding: 40px;
+
+    margin-top: 80px;
+
+    color: #64748b;
+
+    border-top:
+        1px solid #252945;
+}
+
+@media(max-width:700px) {
+
+    .tech-grid {
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero h1 {
+
+        font-size: 40px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+        EmotionAI
+    </div>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/emotions">Emotions</a>
+
+        <a href="/detector">Detector</a>
+
+        <a href="/about">About</a>
+
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <h1>
+        About EmotionAI
+    </h1>
+
+    <p>
+        A machine learning project for detecting emotions
+        from natural language text.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+
+    <div class="card">
+
+        <h2>
+            What is Text Emotion Detection?
+        </h2>
+
+        <p>
+            Text Emotion Detection is a Natural Language
+            Processing task that identifies the emotional
+            meaning expressed in written text.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            How Does Our System Work?
+        </h2>
+
+        <p>
+            The system converts text into numerical features
+            using TF-IDF and then uses a trained machine
+            learning classification model to predict the
+            emotion.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Supported Emotions
+        </h2>
+
+        <p>
+            The current system supports Joy, Sadness, Anger,
+            Fear, Surprise and Love.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Technologies Used
+        </h2>
+
+        <div class="tech-grid">
+
+            <div class="tech">
+                Python
+            </div>
+
+            <div class="tech">
+                Flask
+            </div>
+
+            <div class="tech">
+                NLP
+            </div>
+
+            <div class="tech">
+                Machine Learning
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<footer>
+
+    EmotionAI — Text Emotion Detection
+
+</footer>
+
+
+</body>
+
+</html>

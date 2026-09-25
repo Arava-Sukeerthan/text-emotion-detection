@@ -1,0 +1,64 @@
+from flask import Flask, render_template, request, jsonify
+import joblib
+import os
+
+app = Flask(__name__)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "model",
+    "emotion_model.pkl"
+)
+
+# Load trained emotion model
+model = joblib.load(MODEL_PATH)
+
+print("Emotion model loaded successfully!")
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+@app.route("/predict", methods=["POST"])
+def predict():
+
+    data = request.get_json()
+
+    text = data.get("text", "").strip()
+
+    if not text:
+        return jsonify({
+            "error": "Please enter some text."
+        }), 400
+
+    # Predict emotion
+    emotion = model.predict([text])[0]
+
+    # Get probabilities
+    probabilities = model.predict_proba([text])[0]
+
+    classes = model.classes_
+
+    probability_dict = dict(
+        zip(classes, probabilities)
+    )
+
+    confidence = probability_dict[emotion] * 100
+
+    return jsonify({
+        "text": text,
+        "emotion": emotion,
+        "confidence": round(confidence, 2),
+        "probabilities": {
+            key: round(value * 100, 2)
+            for key, value in probability_dict.items()
+        }
+    })
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -1,0 +1,43 @@
+emotion_info = {
+    "joy": {
+        "emoji": "😊",
+        "name": "Joy",
+        "description": "Happiness, excitement, and positive feelings."
+    },
+
+    "sadness": {
+        "emoji": "😢",
+        "name": "Sadness",
+        "description": "Unhappiness, loneliness, disappointment, or loss."
+    },
+
+    "anger": {
+        "emoji": "😡",
+        "name": "Anger",
+        "description": "Frustration, irritation, or strong displeasure."
+    },
+
+    "fear": {
+        "emoji": "😨",
+        "name": "Fear",
+        "description": "Worry, nervousness, anxiety, or feeling unsafe."
+    },
+
+    "surprise": {
+        "emoji": "😲",
+        "name": "Surprise",
+        "description": "Unexpected events, shock, or astonishment."
+    },
+
+    "love": {
+        "emoji": "❤️",
+        "name": "Love",
+        "description": "Affection, care, and emotional connection."
+    },
+
+    "neutral": {
+        "emoji": "😐",
+        "name": "Neutral",
+        "description": "A sentence that does not clearly express a strong emotion."
+    }
+}

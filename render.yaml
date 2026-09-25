@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: emotion-backend
+    env: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+
+  - type: static
+    name: emotion-frontend
+    plan: free
+    rootDir: frontend
+    staticPublishPath: .

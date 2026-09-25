@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EmotionAI | Discover Feelings</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* =====================================
+           RESET
+        ===================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #05050d;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =====================================
+           ANIMATED BACKGROUND
+        ===================================== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -5;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(124, 58, 237, 0.30),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(236, 72, 153, 0.22),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(37, 99, 235, 0.20),
+                    transparent 30%
+                );
+        }
+
+        .background-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -4;
+            opacity: 0.18;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.05) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.05) 1px,
+                    transparent 1px
+                );
+
+            background-size: 60px 60px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent
+            );
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.25;
+            z-index: -3;
+            pointer-events: none;
+        }
+
+        .orb.one {
+            width: 300px;
+            height: 300px;
+            background: #7c3aed;
+            top: 15%;
+            left: -120px;
+            animation: moveOrb 12s ease-in-out infinite alternate;
+        }
+
+        .orb.two {
+            width: 280px;
+            height: 280px;
+            background: #ec4899;
+            right: -120px;
+            top: 40%;
+            animation: moveOrb 15s ease-in-out infinite alternate-reverse;
+        }
+
+        .orb.three {
+            width: 250px;
+            height: 250px;
+            background: #2563eb;
+            bottom: -100px;
+            left: 45%;
+            animation: moveOrb 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes moveOrb {
+
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, -50px) scale(1.15);
+            }
+
+            100% {
+                transform: translate(-30px, 40px) scale(0.9);
+            }
+        }
+
+
+        /* =====================================
+           NAVBAR
+        ===================================== */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 7%;
+
+            background: rgba(5, 5, 13, 0.65);
+            backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-family: "Poppins", sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo-gradient {
+            background: linear-gradient(
+                90deg,
+                #a78bfa,
+                #f472b6,
+                #60a5fa
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #a7a7ba;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-button {
+            padding: 10px 18px;
+            border-radius: 30px;
+
+            color: white !important;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            box-shadow:
+                0 10px 30px rgba(124,58,237,0.30);
+        }
+
+
+        /* =====================================
+           HERO
+        ===================================== */
+
+        .hero {
+            min-height: 850px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 80px 7%;
+
+            gap: 60px;
+        }
+
+        .hero-content {
+            width: 52%;
+
+            animation:
+                slideLeft 1s ease forwards;
+        }
+
+        @keyframes slideLeft {
+
+            from {
+                opacity: 0;
+                transform: translateX(-70px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .small-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 10px 16px;
+
+            border-radius: 50px;
+
+            background: rgba(124,58,237,0.10);
+
+            border: 1px solid rgba(167,139,250,0.25);
+
+            color: #ddd6fe;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #a78bfa;
+
+            box-shadow:
+                0 0 15px #a78bfa;
+
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+
+            50% {
+                opacity: 0.25;
+                transform: scale(1.6);
+            }
+        }
+
+        .hero h1 {
+            font-family: "Poppins", sans-serif;
+
+            font-size: clamp(48px, 6vw, 78px);
+
+            line-height: 1.05;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 25px;
+        }
+
+        .gradient-title {
+            background:
+                linear-gradient(
+                    90deg,
+                    #a78bfa,
+                    #f472b6,
+                    #60a5fa,
+                    #a78bfa
+                );
+
+            background-size: 300% auto;
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            animation:
+                gradientFlow 5s linear infinite;
+        }
+
+        @keyframes gradientFlow {
+
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        .hero-description {
+            color: #9ca3af;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+
+            max-width: 650px;
+
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 15px 23px;
+
+            border-radius: 14px;
+
+            font-weight: 700;
+
+            transition: 0.35s;
+        }
+
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #ec4899
+                );
+
+            box-shadow:
+                0 15px 40px rgba(124,58,237,0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 20px 50px rgba(236,72,153,0.35);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background: rgba(255,255,255,0.04);
+
+            color: #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px);
+
+            background: rgba(255,255,255,0.08);
+        }
+
+
+        /* =====================================
+           AI EMOTION ORBIT
+        ===================================== */
+
+        .hero-visual {
+            width: 48%;
+
+            display: flex;
+            justify-content: center;
+
+            animation:
+                visualAppear 1.3s ease forwards;
+        }
+
+        @keyframes visualAppear {
+
+            from {
+                opacity: 0;
+                transform: scale(0.75);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .universe {
+            position: relative;
+
+            width: 480px;
+            height: 480px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .universe-ring {
+            position: absolute;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(167,139,250,0.25);
+        }
+
+        .ring-large {
+            width: 430px;
+            height: 430px;
+
+            animation:
+                spin 25s linear infinite;
+        }
+
+        .ring-medium {
+            width: 340px;
+            height: 340px;
+
+            border-color:
+                rgba(244,114,182,0.25);
+
+            animation:
+                spinReverse 18s linear infinite;
+        }
+
+        .ring-small {
+            width: 250px;
+            height: 250px;
+
+            border-color:
+                rgba(96,165,250,0.25);
+
+            animation:
+                spin 12s linear infinite;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spinReverse {
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+
+        /* =====================================
+           CENTER AI
+        ===================================== */
+
+        .ai-core {
+            position: relative;
+            z-index: 10;
+
+            width: 155px;
+            height: 155px;
+
+            border-radius: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 75px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124,58,237,0.35),
+                    rgba(236,72,153,0.20)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.18);
+
+            box-shadow:
+                0 0 60px rgba(124,58,237,0.40),
+                inset 0 0 40px rgba(255,255,255,0.04);
+
+            animation:
+                coreFloat 3.5s ease-in-out infinite;
+        }
+
+        .ai-core::before {
+            content: "";
+
+            position: absolute;
+
+            inset: -12px;
+
+            border-radius: 50px;
+
+            border:
+                1px solid rgba(167,139,250,0.20);
+
+            animation:
+                corePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes coreFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes corePulse {
+
+            50% {
+                transform: scale(1.08);
+                opacity: 0.3;
+            }
+        }
+
+
+        /* =====================================
+           EMOTION ORBIT CARDS
+        ===================================== */
+
+        .emotion {
+            position: absolute;
+
+            width: 70px;
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            font-size: 34px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border:
+                1px solid rgba(255,255,255,0.13);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,0.25);
+
+            animation:
+                floating 3s ease-in-out infinite;
+        }
+
+        .emotion:nth-child(5) {
+            top: 10px;
+            left: 205px;
+        }
+
+        .emotion:nth-child(6) {
+            top: 95px;
+            right: 25px;
+            animation-delay: .5s;
+        }
+
+        .emotion:nth-child(7) {
+            bottom: 85px;
+            right: 45px;
+            animation-delay: 1s;
+        }
+
+        .emotion:nth-child(8) {
+            bottom: 10px;
+            left: 205px;
+            animation-delay: 1.5s;
+        }
+
+        .emotion:nth-child(9) {
+            bottom: 85px;
+            left: 45px;
+            animation-delay: 2s;
+        }
+
+        .emotion:nth-child(10) {
+            top: 95px;
+            left: 25px;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes floating {
+
+            0%,100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-13px)
+                    rotate(6deg);
+            }
+        }
+
+
+        /* =====================================
+           STATS
+        ===================================== */
+
+        .stats {
+            padding: 10px 7% 80px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .stat-card {
+            padding: 28px;
+
+            border-radius: 22px;
+
+            text-align: center;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(15px);
+
+            transition: 0.4s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+
+            border-color:
+                rgba(167,139,250,0.35);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .stat-number {
+            font-family: "Poppins";
+
+            font-size: 34px;
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #a78bfa,
+                    #f472b6
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #8f96a8;
+            margin-top: 7px;
+        }
+
+
+        /* =====================================
+           SECTION
+        ===================================== */
+
+        .section {
+            padding: 100px 7%;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 750px;
+
+            margin:
+                0 auto 55px;
+        }
+
+        .section-label {
+            color: #a78bfa;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .section-heading h2 {
+            font-family: "Poppins";
+
+            font-size: 43px;
+
+            line-height: 1.2;
+
+            margin:
+                12px 0;
+        }
+
+        .section-heading p {
+            color: #8f96a8;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================
+           HOW IT WORKS
+        ===================================== */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+        .step {
+            position: relative;
+
+            padding: 35px;
+
+            min-height: 260px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.07),
+                    rgba(255,255,255,0.025)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            overflow: hidden;
+
+            transition: 0.4s;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+
+            border-color:
+                rgba(167,139,250,0.35);
+        }
+
+        .step-number {
+            font-size: 12px;
+
+            color: #a78bfa;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .step-icon {
+            font-size: 48px;
+
+            margin:
+                25px 0 20px;
+
+            display: inline-block;
+
+            transition: 0.4s;
+        }
+
+        .step:hover .step-icon {
+            transform:
+                scale(1.2)
+                rotate(8deg);
+        }
+
+        .step h3 {
+            font-family: "Poppins";
+
+            font-size: 22px;
+
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #8f96a8;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+        .step::after {
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124,58,237,0.12);
+
+            filter: blur(50px);
+
+            right: -50px;
+            bottom: -50px;
+        }
+
+
+        /* =====================================
+           EMOTION CARDS
+        ===================================== */
+
+        .emotion-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(6, 1fr);
+
+            gap: 15px;
+        }
+
+        .emotion-card {
+            padding: 28px 12px;
+
+            text-align: center;
+
+            border-radius: 23px;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            transition:
+                transform .4s,
+                background .4s,
+                box-shadow .4s;
+        }
+
+        .emotion-card:hover {
+            transform:
+                translateY(-12px)
+                scale(1.03);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .emotion-card .big-emoji {
+            font-size: 50px;
+
+            display: block;
+
+            margin-bottom: 15px;
+
+            transition: .4s;
+        }
+
+        .emotion-card:hover .big-emoji {
+            transform:
+                scale(1.25)
+                rotate(8deg);
+        }
+
+        .emotion-card h3 {
+            font-family: "Poppins";
+
+            font-size: 17px;
+        }
+
+        .emotion-card p {
+            color: #777f92;
+
+            font-size: 12px;
+
+            margin-top: 6px;
+        }
+
+
+        /* =====================================
+           DEMO CARD
+        ===================================== */
+
+        .demo-wrapper {
+            display: flex;
+
+            justify-content: center;
+        }
+
+        .demo-card {
+            width: 900px;
+
+            padding: 35px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124,58,237,0.13),
+                    rgba(255,255,255,0.04)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.11);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.3);
+        }
+
+        .demo-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .demo-title {
+            font-weight: 700;
+        }
+
+        .demo-status {
+            color: #a78bfa;
+
+            font-size: 12px;
+        }
+
+        .text-box {
+            padding: 22px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(0,0,0,0.25);
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            color: #cbd5e1;
+
+            line-height: 1.6;
+        }
+
+        .result {
+            margin-top: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(124,58,237,0.10);
+
+            border:
+                1px solid rgba(167,139,250,0.18);
+        }
+
+        .result-emoji {
+            font-size: 48px;
+        }
+
+        .result h3 {
+            font-family: "Poppins";
+
+            font-size: 23px;
+        }
+
+        .result p {
+            color: #8f96a8;
+
+            font-size: 13px;
+
+            margin-top: 4px;
+        }
+
+
+        /* =====================================
+           CTA
+        ===================================== */
+
+        .cta {
+            margin:
+                60px 7% 100px;
+
+            padding:
+                80px 30px;
+
+            text-align: center;
+
+            border-radius: 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,58,237,0.22),
+                    rgba(236,72,153,0.16)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(167,139,250,0.15);
+
+            filter: blur(80px);
+
+            left: 50%;
+            top: -180px;
+
+            transform:
+                translateX(-50%);
+        }
+
+        .cta h2 {
+            position: relative;
+
+            font-family: "Poppins";
+
+            font-size: 42px;
+
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            position: relative;
+
+            color: #9ca3af;
+
+            margin-bottom: 30px;
+        }
+
+        .cta .btn-primary {
+            position: relative;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        footer {
+            text-align: center;
+
+            padding: 35px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+            color: #667085;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+        footer strong {
+            color: #a78bfa;
+        }
+
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 1100px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content,
+            .hero-visual {
+                width: 100%;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .emotion-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding:
+                    60px 5%;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+                letter-spacing: -2px;
+            }
+
+            .universe {
+                transform: scale(0.78);
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding:
+                    70px 5%;
+            }
+
+            .emotion-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .demo-card {
+                width: 100%;
+            }
+
+            .cta {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            .cta h2 {
+                font-size: 31px;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .universe {
+                transform: scale(0.62);
+                margin-top: -40px;
+                margin-bottom: -40px;
+            }
+
+            .emotion-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .result {
+                flex-direction: column;
+                text-align: center;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background-grid"></div>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+
+
+    <!-- NAVBAR -->
+    <nav>
+
+        <div class="logo">
+            🧠 <span class="logo-gradient">EmotionAI</span>
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            <li>
+                <a href="/emotions">Emotions</a>
+            </li>
+
+            <li>
+                <a href="/detector">Detector</a>
+            </li>
+
+            <li>
+                <a href="/about">About</a>
+            </li>
+
+            <li>
+                <a href="/detector" class="nav-button">
+                    ✨ Try Now
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="small-badge">
+                <span class="status-dot"></span>
+                🤖 emotion detection • NLP 
+            </div>
+
+
+            <h1>
+
+                Your Words Have
+                <br>
+
+                <span class="gradient-title">
+                    Feelings. 💜
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Discover the emotion hidden inside your text.
+                EmotionAI uses Natural Language Processing  to transform ordinary words
+                into meaningful emotions. 🧠✨
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="/detector" class="btn-primary">
+                    🚀 Analyze Your Text
+                </a>
+
+                <a href="/emotions" class="btn-secondary">
+                    🎭 Explore Emotions
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI UNIVERSE -->
+
+        <div class="hero-visual">
+
+            <div class="universe">
+
+                <div class="universe-ring ring-large"></div>
+
+                <div class="universe-ring ring-medium"></div>
+
+                <div class="universe-ring ring-small"></div>
+
+
+                <!-- CENTER -->
+
+                <div class="ai-core">
+                    🧠
+                </div>
+
+
+                <!-- EMOTIONS -->
+
+                <div class="emotion">
+                    😊
+                </div>
+
+                <div class="emotion">
+                    😲
+                </div>
+
+                <div class="emotion">
+                    😡
+                </div>
+
+                <div class="emotion">
+                    ❤️
+                </div>
+
+                <div class="emotion">
+                    😨
+                </div>
+
+                <div class="emotion">
+                    😢
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         STATS
+    ====================================== -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-number">
+                6+
+            </div>
+
+            <div class="stat-label">
+                🎭 Emotion Categories
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-number">
+                TF-IDF
+            </div>
+
+            <div class="stat-label">
+                🔍 NLP Text Features
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-number">
+                
+            </div>
+
+            <div class="stat-label">
+                🤖 Prediction Engine
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         HOW IT WORKS
+    ====================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                HOW IT WORKS ⚡
+            </div>
+
+            <h2>
+                From Words to Emotions
+            </h2>
+
+            <p>
+                A simple three-step process turns your text
+                into an emotion prediction.
+            </p>
+
+        </div>
+
+
+        <div class="steps">
+
+            <div class="step">
+
+                <div class="step-number">
+                    STEP 01
+                </div>
+
+                <div class="step-icon">
+                    📝
+                </div>
+
+                <h3>
+                    Enter Your Text
+                </h3>
+
+                <p>
+                    Write a sentence, message or any text
+                    you want the system to analyze.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    STEP 02
+                </div>
+
+                <div class="step-icon">
+                    🔍
+                </div>
+
+                <h3>
+                    NLP Analysis
+                </h3>
+
+                <p>
+                    TF-IDF converts the text into numerical
+                    features can understand.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    STEP 03
+                </div>
+
+                <div class="step-icon">
+                    🎭
+                </div>
+
+                <h3>
+                    Emotion Detected
+                </h3>
+
+                <p>
+                    The trained predicts the emotional
+                    category associated with your text.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         EMOTIONS
+    ====================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                EMOTION UNIVERSE 🌌
+            </div>
+
+            <h2>
+                Six Emotions. One AI.
+            </h2>
+
+            <p>
+                Explore the emotions our system is designed
+                to recognize.
+            </p>
+
+        </div>
+
+
+        <div class="emotion-grid">
+
+            <div class="emotion-card">
+
+                <span class="big-emoji">
+                    😊
+                </span>
+
+                <h3>
+                    Joy
+                </h3>
+
+                <p>
+                    Happiness
+                </p>
+
+            </div>
+
+
+            <div class="emotion-card">
+
+                <span class="big-emoji">
+                    😢
+                </span>
+
+                <h3>
+                    Sadness
+                </h3>
+
+                <p>
+                    Unhappy feelings
+                </p>
+
+            </div>
+
+
+            <div class="emotion-card">
+
+                <span class="big-emoji">
+                    😡
+                </span>
+
+                <h3>
+                    Anger
+                </h3>
+
+                <p>
+                    Frustration
+                </p>
+
+            </div>
+
+
+            <div class="emotion-card">
+
+                <span class="big-emoji">
+                    😨
+                </span>
+
+                <h3>
+                    Fear
+                </h3>
+
+                <p>
+                    Worry
+                </p>
+
+            </div>
+
+
+            <div class="emotion-card">
+
+                <span class="big-emoji">
+                    😲
+                </span>
+
+                <h3>
+                    Surprise
+                </h3>
+
+                <p>
+                    Astonishment
+                </p>
+
+            </div>
+
+
+            <div class="emotion-card">
+
+                <span class="big-emoji">
+                    ❤️
+                </span>
+
+                <h3>
+                    Love
+                </h3>
+
+                <p>
+                    Affection
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         DEMO
+    ====================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <div class="section-label">
+                SEE IT IN ACTION ✨
+            </div>
+
+            <h2>
+                Words → Meaning → Emotion
+            </h2>
+
+        </div>
+
+
+        <div class="demo-wrapper">
+
+            <div class="demo-card">
+
+                <div class="demo-top">
+
+                    <div class="demo-title">
+                        💬 Sample Analysis
+                    </div>
+
+                    <div class="demo-status">
+                        ● AI READY
+                    </div>
+
+                </div>
+
+
+                <div class="text-box">
+
+                    "Today was amazing! I had such a wonderful
+                    time with my friends."
+
+                </div>
+
+
+                <div class="result">
+
+                    <div class="result-emoji">
+                        😊
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Joy
+                        </h3>
+
+                        <p>
+                            Positive emotional expression detected ✨
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================
+         CTA
+    ====================================== -->
+
+    <section class="cta">
+
+        <h2>
+            Ready to Decode Your Words? 🔮
+        </h2>
+
+        <p>
+            Let EmotionAI discover the feeling behind your text.
+        </p>
+
+        <a href="/detector" class="btn-primary">
+            🚀 Start Emotion Detection
+        </a>
+
+    </section>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+        <p>
+            🧠 <strong>Emotion Detection</strong>
+            — Text Emotion Detection
+        </p>
+
+        <p>
+            Built with ❤️ using Python + Flask
+        </p>
+
+    </footer>
+
+</body>
+</html>
